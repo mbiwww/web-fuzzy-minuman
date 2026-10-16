@@ -1,0 +1,418 @@
+/* ---------- Layout ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  min-height: 100vh;
+}
+
+.content {
+  padding: 56px 32px 64px 56px;
+  min-width: 0;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  background: var(--surface);
+  border-right: var(--border);
+  padding: 40px 32px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.brand__logo {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  background: var(--head);
+  border: var(--border);
+}
+
+.brand__name {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.brand__role {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav__item {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 18px;
+  text-align: left;
+  text-decoration: none;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+}
+
+.nav__item:hover {
+  background: var(--head);
+}
+
+.nav__item--active,
+.nav__item--active:hover {
+  background: var(--ink);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ---------- Header ---------- */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.page-title {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.page-subtitle {
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: 700;
+  background: var(--surface);
+  color: var(--ink);
+  border: var(--border);
+}
+
+.btn:hover {
+  background: var(--head);
+}
+
+.btn--primary {
+  background: var(--ink);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: #000;
+}
+
+.btn--small {
+  padding: 8px 18px;
+  font-size: 16px;
+}
+
+.btn--dashed {
+  border-style: dashed;
+}
+
+/* ---------- Search ---------- */
+.search {
+  margin-bottom: 36px;
+}
+
+.search__label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.search__row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.search__total {
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: var(--border);
+  border-radius: 0;
+}
+
+.input--large {
+  padding: 18px 24px;
+  font-size: 20px;
+}
+
+.input::placeholder {
+  color: #767676;
+}
+
+/* ---------- Table ---------- */
+.table-wrap {
+  overflow-x: auto;
+  background: var(--surface);
+  border: var(--border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 18px;
+}
+
+.table th,
+.table td {
+  padding: 0 24px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table thead th {
+  height: 80px;
+  font-weight: 700;
+  background: var(--head);
+  border-bottom: var(--border);
+}
+
+.table tbody td {
+  height: 106px;
+  border-bottom: 1px solid var(--line);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody tr:hover td {
+  background: #fafafa;
+}
+
+.table__empty {
+  text-align: center !important;
+  color: var(--muted);
+}
+
+.table__actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* ---------- Pagination ---------- */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.pagination__info {
+  color: var(--muted);
+}
+
+.pagination__buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.page-btn {
+  width: 78px;
+  height: 78px;
+  font-size: 20px;
+  background: var(--surface);
+  border: var(--border);
+}
+
+.page-btn:hover:not(:disabled) {
+  background: var(--head);
+}
+
+.page-btn--active,
+.page-btn--active:hover {
+  background: var(--ink) !important;
+  color: #fff;
+  font-weight: 700;
+}
+
+.page-btn:disabled {
+  color: #aaa;
+  border-color: #aaa;
+  cursor: not-allowed;
+}
+
+/* ---------- Form tambah / edit ---------- */
+.btn--link {
+  display: inline-block;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.form-header {
+  margin-bottom: 32px;
+}
+
+.breadcrumb {
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+
+.breadcrumb a {
+  color: var(--muted);
+}
+
+.breadcrumb a:hover {
+  color: var(--ink);
+}
+
+.form-card {
+  max-width: 1120px;
+  padding: 36px;
+  background: var(--surface);
+  border: var(--border);
+}
+
+.form-section-title {
+  margin-bottom: 16px;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.form-card section + section {
+  margin-top: 44px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 24px 20px;
+  align-items: start;
+}
+
+.form-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.field {
+  display: block;
+  min-width: 0;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.field__hint {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.form-message {
+  margin-top: 36px;
+  padding: 14px 20px;
+  background: var(--bg);
+  border: 2px dashed var(--ink);
+  color: var(--ink);
+}
+
+.form-message ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 36px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: var(--border);
+    padding: 24px;
+  }
+
+  .brand {
+    margin-bottom: 20px;
+  }
+
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .nav__item {
+    width: auto;
+  }
+
+  .content {
+    padding: 32px 24px 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  .form-grid--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .form-card {
+    padding: 20px;
+  }
+
+  .form-grid--2,
+  .form-grid--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    flex-direction: column;
+  }
+
+  .page-title {
+    font-size: 30px;
+  }
+
+  .search__row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .page-btn {
+    width: 52px;
+    height: 52px;
+  }
+}
