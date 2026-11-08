@@ -1,108 +1,125 @@
-import { useMemo } from 'react'
-import CategoryBadge from '../components/public/CategoryBadge'
-import { CATEGORIES, formatDegree, formatRupiah, rankSamples } from '../lib/fuzzy'
+import { useEffect } from 'react'
+import CategoryBadge from '../components/CategoryBadge'
+import DrinkThumb from '../components/DrinkThumb'
+import { CATEGORIES, CATEGORY_ORDER } from '../lib/categories'
+import { formatNumber } from '../lib/format'
 
 const STEPS = [
   {
-    title: 'Fuzzifikasi',
-    text: 'Harga dan nilai gizi diubah menjadi himpunan fuzzy: murah, normal, mahal dan rendah, sedang, tinggi.',
+    title: 'Masukkan data',
+    text: 'Isi harga dan nilai gizi total minuman kaleng.',
   },
   {
-    title: 'Aplikasi aturan',
-    text: '9 aturan IF-THEN menghubungkan harga dan gizi dengan tingkat rekomendasi.',
+    title: 'Sistem menilai',
+    text: 'Sistem menilai kecocokan harga dengan nilai gizinya.',
   },
   {
-    title: 'Komposisi aturan',
-    text: 'Hasil semua aturan digabung menjadi satu himpunan keluaran fuzzy.',
-  },
-  {
-    title: 'Defuzzifikasi',
-    text: 'Himpunan keluaran diubah menjadi satu nilai tegas antara 0 dan 1.',
+    title: 'Terima rekomendasi',
+    text: 'Hasilnya satu dari tiga pilihan di bawah ini.',
   },
 ]
 
-export default function HomePage({ samples }) {
-  const top = useMemo(() => rankSamples(samples).slice(0, 3), [samples])
+function HeroArt() {
+  return (
+    <div className="hero-art" role="img" aria-label="Ilustrasi tiga minuman kaleng">
+      <div className="hero-art__cans" aria-hidden="true">
+        <span className="hero-can hero-can--green">HEMAT</span>
+        <span className="hero-can hero-can--orange hero-can--tall">SEHAT</span>
+        <span className="hero-can hero-can--teal">SEGAR</span>
+      </div>
+      <p className="hero-art__caption">[Ilustrasi / foto minuman kaleng]</p>
+    </div>
+  )
+}
+
+export default function HomePage({ ranked, scrollToTop }) {
+  const top = ranked.slice(0, 3)
+
+  // Tautan "Lihat Top Recommendation" langsung menggulir ke bagian bawah.
+  useEffect(() => {
+    if (scrollToTop) {
+      document.getElementById('top-recommendation')?.scrollIntoView({ block: 'start' })
+    }
+  }, [scrollToTop])
 
   return (
     <>
-      {/* Hero */}
       <section className="hero">
         <div className="container hero__inner">
           <div className="hero__text">
-            <p className="eyebrow">Logika fuzzy Mamdani</p>
+            <p className="eyebrow">Rekomendasi minuman kaleng</p>
             <h1 className="hero__title">Pilih minuman kaleng yang sehat dan hemat</h1>
             <p className="hero__lead">
-              Masukkan harga dan nilai gizi total. Sistem menghitung derajat keanggotaan lalu
-              memberi rekomendasi: Dibeli, Dipertimbangkan, atau Tidak Dibeli.
+              Masukkan harga dan nilai gizi total minuman. Kamu langsung mendapat rekomendasi:
+              Dibeli, Dipertimbangkan, atau Tidak Dibeli.
             </p>
             <div className="hero__actions">
-              <a href="#/rekomendasi" className="btn btn--primary btn--link">
-                Mulai Rekomendasi
+              <a href="#/rekomendasi" className="btn btn--primary btn--large">
+                Cek Rekomendasi
               </a>
-              <a href="#/sampel" className="btn btn--link">
-                Lihat Daftar Sampel
+              <a href="#/top" className="btn btn--outline btn--large">
+                Lihat Top Recommendation
               </a>
             </div>
           </div>
 
-          <div className="placeholder" role="img" aria-label="Tempat ilustrasi minuman kaleng">
-            [Ilustrasi / foto minuman kaleng]
-          </div>
+          <HeroArt />
         </div>
       </section>
 
-      {/* Cara kerja */}
-      <section className="section section--white">
+      <section className="section">
         <div className="container">
-          <h2 className="section__title">Cara kerja rekomendasi</h2>
+          <h2 className="section__title">Cara menggunakan</h2>
 
           <ol className="steps">
-            {STEPS.map((s, i) => (
-              <li key={s.title} className="step-card">
+            {STEPS.map((step, i) => (
+              <li key={step.title} className="step-card">
                 <span className="step-card__num">{i + 1}</span>
-                <h3 className="step-card__title">{s.title}</h3>
-                <p className="step-card__text">{s.text}</p>
+                <h3 className="step-card__title">{step.title}</h3>
+                <p className="step-card__text">{step.text}</p>
               </li>
             ))}
           </ol>
 
-          <div className="legend">
-            <strong>Kategori hasil:</strong>
-            {[CATEGORIES.dibeli, CATEGORIES.pertimbangkan, CATEGORIES.tidak].map((c) => (
-              <span className="legend__item" key={c.key}>
-                <CategoryBadge category={c.key} />
-                <span>{c.range}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Rekomendasi teratas */}
-      <section className="section section--gray">
-        <div className="container">
-          <div className="section__head">
-            <h2 className="section__title">Rekomendasi teratas dari data sampel</h2>
-            <a href="#/sampel" className="link-strong">
-              Lihat semua sampel
-            </a>
-          </div>
-
-          <ul className="top-grid">
-            {top.map((s) => (
-              <li key={s.no} className="top-card">
-                <div className="top-card__head">
-                  <span className="top-card__name">Sampel {s.no}</span>
-                  <CategoryBadge category={s.category.key} />
-                </div>
-                <p className="top-card__value">{formatDegree(s.degree)}</p>
-                <p className="top-card__meta">
-                  Harga Rp {formatRupiah(s.harga)} · Gizi total {s.gt}
-                </p>
+          <ul className="legend" aria-label="Arti kategori hasil">
+            {CATEGORY_ORDER.map((key) => (
+              <li key={key} className="legend__item">
+                <CategoryBadge category={key} />
+                <span>{CATEGORIES[key].hint}</span>
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className="section" id="top-recommendation">
+        <div className="container">
+          <h2 className="section__title">Top Recommendation</h2>
+          <p className="section__lead">Minuman kaleng dengan rekomendasi terbaik saat ini.</p>
+
+          {top.length === 0 ? (
+            <p className="empty">Belum ada data minuman.</p>
+          ) : (
+            <ul className="top-grid">
+              {top.map((drink, i) => (
+                <li key={drink.id} className={`top-card top-card--${i % 3}`}>
+                  <div className="top-card__media">
+                    <DrinkThumb drink={drink} index={i} className="top-card__img" />
+                  </div>
+                  <div className="top-card__body">
+                    <div className="top-card__row">
+                      <span className="rank-pill">#{drink.rank}</span>
+                      <CategoryBadge category={drink.category} />
+                    </div>
+                    <h3 className="top-card__name">{drink.nama}</h3>
+                    <p className="top-card__meta">
+                      Harga Rp {formatNumber(drink.harga)} · Gizi total {drink.gizi}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
     </>
